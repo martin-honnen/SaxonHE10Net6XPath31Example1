@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+        targetNamespace="http://sg.iaea.org/ssac-qs/qsSchema.xsd"
+        xmlns:sg="http://sg.iaea.org/ssac-qs/qsSchema.xsd"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="EmployeeDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FirstName" type="xs:string"/>
+        <xs:element name="MiddleName">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="LastName" type="xs:string" />
+        <xs:element name="EmailId" type="xs:string" />
+        <xs:element name="Mobile" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="Years">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Year" type="sg:Year" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Address">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="5"/>
+              <xs:maxLength value="100"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Cars" type="sg:Cars"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Cars">
+    <xs:sequence>
+      <xs:element name="Car" type="sg:Car" maxOccurs="unbounded">
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Car">
+    <xs:simpleContent>
+      <xs:extension base="sg:CarModel">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="year" type="sg:Year" use="required"/>
+        <xs:attribute name="condition" type="xs:string" use="optional"  />
+        <!--fixed="count(./ancestor::sg:EmployeeDetails/Year[text() &lt;= [@year]])=1"/>-->
+        <xs:attribute name="message" type="xs:string" use="optional" fixed="Driver must be 100 yrs old."/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:simpleType name="CarModel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Audi"/>
+      <xs:enumeration value="Golf"/>
+      <xs:enumeration value="BMW"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Year">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="1900" />
+      <xs:maxInclusive value="2200" />
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

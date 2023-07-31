@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sg:EmployeeDetails xmlns:sg="http://sg.iaea.org/ssac-qs/qsSchema.xsd">
+  <sg:FirstName>John</sg:FirstName>
+  <sg:MiddleName>H</sg:MiddleName>
+  <sg:LastName>Doe</sg:LastName>
+  <sg:EmailId>John.Doe@example.com</sg:EmailId>
+  <sg:Mobile>0123456789</sg:Mobile>
+  <sg:Years>
+    <sg:Year>1954</sg:Year>
+    <sg:Year>1980</sg:Year>
+    <sg:Year>1954</sg:Year>
+  </sg:Years>
+  <sg:Address>42, Some Street, Some City, Some Country - 12345</sg:Address>
+  <sg:Cars>
+    <sg:Car id="car1" year="1980" condition="let $car := . return count(ancestor::sg:EmployeeDetails/sg:Years/sg:Year[. = $car/@year]) > 0" message="Driver must be 100 yrs old.">BMW</sg:Car>
+    <sg:Car id="car2" year="1954" condition="let $car := . return count(ancestor::sg:EmployeeDetails/sg:Years/sg:Year[. = $car/@year]) > 0" message="Driver must be 100 yrs old.">BMW</sg:Car>
+    <sg:Car id="car3" year="1984" condition="let $car := . return count(ancestor::sg:EmployeeDetails/sg:Years/sg:Year[. = $car/@year]) > 0" message="Driver must be 100 yrs old.">BMW</sg:Car>
+  </sg:Cars>
+</sg:EmployeeDetails>
